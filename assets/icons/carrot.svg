@@ -1,0 +1,21 @@
+<svg width="25" height="38" viewBox="0 0 25 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M18.9116 14.523C18.9116 11.9916 15.4471 9.11506 12.2061 10.3807C8.96511 11.6464 0.247934 33.6233 0.0244163 35.8095C-0.199101 37.9957 1.142 38.571 2.81838 37.4204C4.49476 36.2697 18.9116 17.0544 18.9116 14.523Z" fill="#F48343"/>
+<mask id="mask0_1_349" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="10" width="19" height="28">
+<path d="M18.9116 14.523C18.9116 11.9916 15.4471 9.11506 12.2061 10.3807C8.96511 11.6464 0.247934 33.6233 0.0244163 35.8095C-0.199101 37.9957 1.142 38.571 2.81838 37.4204C4.49476 36.2697 18.9116 17.0544 18.9116 14.523Z" fill="#F48343"/>
+</mask>
+<g mask="url(#mask0_1_349)">
+<path d="M8.45459 15.5663L11.5694 17.8554" stroke="#F5EDD0" stroke-linecap="round"/>
+<path d="M5.11725 31.3615L6.89717 32.7349" stroke="#F5EDD0" stroke-linecap="round"/>
+<path d="M0.66748 33.4217L2.00242 34.3374" stroke="#F5EDD0" stroke-linecap="round"/>
+<path d="M0.445007 33.8795L1.33497 34.5663" stroke="#F5EDD0" stroke-linecap="round"/>
+<path d="M0 34.3373L0.667469 34.7952" stroke="#F5EDD0" stroke-linecap="round"/>
+<path d="M11.1245 20.6024L14.2394 22.8916" stroke="#F5EDD0" stroke-linecap="round"/>
+<path d="M16.0193 15.5663L18.0217 16.9398" stroke="#F5EDD0" stroke-linecap="round"/>
+<path d="M4.22729 24.7229L6.45219 26.3253" stroke="#F5EDD0" stroke-linecap="round"/>
+<path d="M3.78235 25.4096L5.11729 26.3253" stroke="#F5EDD0" stroke-linecap="round"/>
+<path d="M11.347 22.8916L13.3494 24.0361" stroke="#F5EDD0" stroke-linecap="round"/>
+<path d="M15.7968 16.4819L17.5767 17.8554" stroke="#F5EDD0" stroke-linecap="round"/>
+</g>
+<path d="M17.9104 0.00377507C17.243 -0.225141 16.6867 10.0303 16.2418 10.7628C16.2418 10.7628 20.7803 5.02992 19.1341 1.72064C18.766 0.980504 18.5779 0.232691 17.9104 0.00377507Z" fill="#569A59"/>
+<path d="M24.0853 3.42676C24.6363 3.87688 16.5918 9.95923 16.2386 10.7429C16.2386 10.7429 18.4258 3.6997 22.0191 3.31024C22.8227 3.22314 23.5342 2.97663 24.0853 3.42676Z" fill="#428145"/>
+</svg>
