@@ -2,5 +2,9 @@
 export default defineNuxtConfig({
   modules: [
     '@pinia/nuxt',
-  ]
+  ],
+  ssr: false,
+  app: {
+    baseURL: '/fart/'
+  }
 })
