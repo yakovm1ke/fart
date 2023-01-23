@@ -49,7 +49,7 @@ if (!isUsersValid.value) {
         :key='index'
       >
         <NuxtLink
-          :class='$style.userNameLink'
+          :class='$style.link'
           :to='`/details/${user.id}`'
         >
           {{ user.name }}
@@ -59,7 +59,12 @@ if (!isUsersValid.value) {
         </div>
       </div>
       <div :class='$style.costRow'>
-        <div :class='$style.heading'>Total</div>
+        <NuxtLink
+          :class='$style.link'
+          to='/details'
+        >
+          Total
+        </NuxtLink>
         <div :class='$style.cost'>{{ getFormattedNumber(store.totalCost) }}</div>
       </div>
     </div>
@@ -75,7 +80,7 @@ if (!isUsersValid.value) {
   margin-top: 28px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
+  gap: 16px;
 }
 .addPurchaseButton {
   margin-top: 16px;
@@ -84,16 +89,17 @@ if (!isUsersValid.value) {
   margin-top: 28px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 .costRow {
   display: flex;
   justify-content: space-between;
   gap: 12px;
 }
-.userNameLink {
+.link {
   color: var(--black);
   text-decoration-color: var(--main);
+  font-weight: 300;
 }
 .cost {
   font-weight: 600;

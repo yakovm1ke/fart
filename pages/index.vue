@@ -5,8 +5,14 @@ import { useMainStore } from '@/stores/main';
 import { storeToRefs } from 'pinia';
 
 const store = useMainStore()
+const router = useRouter()
 store.resetStore()
 const { users, isUsersValid } = storeToRefs(store)
+
+if (!users.value.length) {
+  router.push('/farting')
+}
+
 
 function handleUserChange(index: number, name: string) {
   users.value[index].name = name
@@ -69,7 +75,7 @@ function handleUserChange(index: number, name: string) {
 .fields {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
+  gap: 16px;
   box-sizing: border-box;
 }
 .fieldWrapper {
