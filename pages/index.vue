@@ -25,7 +25,7 @@ function handleUserChange(index: number, name: string) {
     <div :class='$style.fields'>
       <div
         v-for='(user, index) in users'
-        :class='$style.fieldWrapper'
+        :class='$style.field'
         :key='user.id'
       >
         <Input
@@ -42,7 +42,6 @@ function handleUserChange(index: number, name: string) {
         </Button>
       </div>
     </div>
-
     <Button
       @click='store.addUser'
       variant='none'
@@ -70,27 +69,27 @@ function handleUserChange(index: number, name: string) {
 .heading {
   font-weight: 600;
   color: var(--main);
-  margin-bottom: 28px;
 }
 .fields {
+  margin-top: 28px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 16px;
+  gap: 18px;
   box-sizing: border-box;
 }
-.fieldWrapper {
+.field {
   width: 100%;
-  gap: 12px;
+  gap: 8px;
   display: grid;
   grid-template-columns: 1fr;
   grid-auto-flow: column;
   align-items: center;
 }
 .addButton {
-  margin-top: 20px;
+  margin-top: 16px;
 }
 .submitButton {
-  margin-top: 32px;
+  margin-top: 28px;
 }
 .caption {
   margin-top: 8px;

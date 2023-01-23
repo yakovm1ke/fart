@@ -1,9 +1,15 @@
 <script lang='ts' setup>
 import { Purchase, useMainStore, User } from '@/stores/main';
 import { storeToRefs } from 'pinia';
-import UserPurchaseDetails from '~~/components/user-purchase-details.vue';
+import UserPurchaseDetails from '@/components/user-purchase-details.vue';
+
+const router = useRouter()
 const store = useMainStore()
 const {users, purchases} = storeToRefs(store)
+
+if (!users.value.length) {
+  router.push('/')
+}
 
 function getUserPurchases(user: User): Purchase[] {
   return purchases.value.filter(purchase => purchase.users.some(purchaseUser => purchaseUser.id === user.id))
@@ -39,8 +45,8 @@ function getUserTotalCost(user: User) {
 }
 .users {
   margin-top: 28px;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 20px;
 }
 </style>

@@ -63,7 +63,9 @@ if (!isUsersValid.value) {
           :class='$style.link'
           to='/details'
         >
-          Total
+          <div :class='$style.cost'>
+            Total
+          </div>
         </NuxtLink>
         <div :class='$style.cost'>{{ getFormattedNumber(store.totalCost) }}</div>
       </div>
