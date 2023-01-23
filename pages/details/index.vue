@@ -7,8 +7,8 @@ const router = useRouter()
 const store = useMainStore()
 const {users, purchases} = storeToRefs(store)
 
-if (!users.value.length) {
-  router.push('/')
+if (!purchases.value.length) {
+  router.push('/farting')
 }
 
 function getUserPurchases(user: User): Purchase[] {
