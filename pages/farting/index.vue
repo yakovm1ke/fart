@@ -11,6 +11,10 @@ const { users, purchases, isUsersValid } = storeToRefs(store)
 if (!isUsersValid.value) {
   router.push('/')
 }
+
+useHead({
+  title: 'Farting'
+})
 </script>
 
 <template>

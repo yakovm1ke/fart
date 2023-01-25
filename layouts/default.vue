@@ -2,6 +2,9 @@
 import carrot from '@/assets/icons/carrot.svg'
 import { useMainStore } from '~~/stores/main';
 const store = useMainStore()
+useHead({
+  title: 'Fart'
+})
 </script>
 
 <template>

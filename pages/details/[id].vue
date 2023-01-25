@@ -15,6 +15,10 @@ const user = users.value.find(user => user.id === userId)
 const userPurchases = purchases.value
   .filter(purchase => purchase.users.some(user => user.id === userId))
 
+useHead({
+  title: user?.name
+})
+
 if (!user) {
   router.push('/farting')
 }

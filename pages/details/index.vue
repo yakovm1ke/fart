@@ -5,9 +5,13 @@ import UserPurchaseDetails from '@/components/user-purchase-details.vue';
 
 const router = useRouter()
 const store = useMainStore()
-const {users, purchases} = storeToRefs(store)
+const {users, purchases, isUsersValid} = storeToRefs(store)
 
-if (!purchases.value.length) {
+useHead({
+  title: 'Details'
+})
+
+if (!isUsersValid.value) {
   router.push('/farting')
 }
 

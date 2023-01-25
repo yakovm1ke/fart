@@ -13,10 +13,13 @@ if (!users.value.length) {
   router.push('/farting')
 }
 
-
 function handleUserChange(index: number, name: string) {
   users.value[index].name = name
 }
+
+useHead({
+  title: 'Start fart'
+})
 </script>
 
 <template>
