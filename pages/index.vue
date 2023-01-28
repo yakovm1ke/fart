@@ -42,7 +42,7 @@ async function handleUserAdd() {
 }
 
 function handleSubmit() {
-  if (!isUsersValid) return
+  if (!isUsersValid.value) return
   router.push('/farting')
 }
 
