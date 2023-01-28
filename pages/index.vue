@@ -24,7 +24,12 @@ function handleUserChange(index: number, name: string) {
 function focusNext(event: KeyboardEvent, index: number) {
   if (event.key !== 'Enter') return
 
-  if (index !== fieldsRefs.value.length - 1 && !!users.value[index].name) {
+  if (index === fieldsRefs.value.length - 1) {
+    handleSubmit()
+    return
+  }
+
+  if (!!users.value[index].name) {
     fieldsRefs.value[index + 1].focus()
     return
   }
@@ -37,6 +42,7 @@ async function handleUserAdd() {
 }
 
 function handleSubmit() {
+  if (!isUsersValid) return
   router.push('/farting')
 }
 

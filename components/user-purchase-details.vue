@@ -78,7 +78,7 @@ function getPurchaseParticipants(purchase: Purchase): User[] {
 .total {
   display: flex;
   flex-grow: 1;
-  align-items: end;
+  align-items: flex-end;
 }
 .caption {
   font-size: 12px;

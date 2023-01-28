@@ -22,6 +22,7 @@ export type PurchaseEmits = {
 const props = defineProps<PurchaseProps>()
 const emit = defineEmits<PurchaseEmits>()
 const purchaseTitleRef: Ref<typeof Input | null> = ref(null)
+const costRef: Ref<typeof InputNumber | null> = ref(null)
 
 const costPerPerson = computed(() => {
   const usersLength = props.purchase.users.length
@@ -31,6 +32,12 @@ const costPerPerson = computed(() => {
 
 function isUserSelected(id: string) {
   return props.purchase.users.some(user => user.id === id)
+}
+
+function handleKeydownOnTitle(event: KeyboardEvent) {
+  if (event.key !== 'Enter') return
+
+  costRef.value?.focus()
 }
 
 function focus() {
@@ -51,8 +58,10 @@ defineExpose({
         :value='purchase.title'
         placeholder='Purchase'
         @input='(title) => emit("changeTitle", title)'
+        @keydown='handleKeydownOnTitle'
       />
       <InputNumber
+        ref='costRef'
         placeholder='Cost'
         :value='purchase.cost'
         @input='(cost) => emit("changeCost", cost)'
