@@ -1,19 +1,32 @@
 <script lang='ts' setup>
 import { useMainStore } from '@/stores/main';
+import Purchase from '~~/components/purchase.vue';
 import { storeToRefs } from 'pinia';
 import Button from '@/components/ui/button.vue';
 import { getFormattedNumber } from '@/helpers';
+import { Ref } from 'vue';
 
 const router = useRouter()
 const store = useMainStore()
 const { users, purchases, isUsersValid } = storeToRefs(store)
+const purchasesRefs: Ref<typeof Purchase[]> = ref([])
 
 if (!isUsersValid.value) {
   router.push('/')
 }
 
+async function handlePurchaseAdd() {
+  store.addPurchase()
+  await nextTick()
+  purchasesRefs.value?.[purchasesRefs.value.length - 1]?.focus()
+}
+
 useHead({
   title: 'Farting'
+})
+
+onMounted(() => {
+  purchasesRefs.value[0].focus()
 })
 </script>
 
@@ -22,11 +35,9 @@ useHead({
     <div :class='$style.heading'>
       FARTING...
     </div>
-    <div
-      v-if='purchases.length > 0'
-      :class='$style.purchases'
-    >
+    <div :class='$style.purchases'>
       <Purchase
+        ref='purchasesRefs'
         v-for='(purchase, index) in purchases'
         :key='index'
         :order='index + 1'
@@ -37,14 +48,13 @@ useHead({
         @toggle-user='(user) => store.toggleUser(index, user)'
         @remove-purchase='store.deletePurchase(index)'
       />
+      <button
+        :class='$style.addPurchaseButton'
+        @click='handlePurchaseAdd'
+      >
+        Add purchase
+      </button>
     </div>
-    <Button
-      :class='$style.addPurchaseButton'
-      :fill='true'
-      @click='store.addPurchase'
-    >
-      Add purchase
-    </Button>
     <div :class='$style.finalFart'>
       <div :class='$style.heading'>FINAL FART</div>
       <div
@@ -85,11 +95,29 @@ useHead({
 .purchases {
   margin-top: 28px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 16px;
 }
 .addPurchaseButton {
-  margin-top: 16px;
+  font-size: inherit;
+  font-weight: 600;
+  font-family: inherit;
+  width: 100%;
+  min-height: 306px;
+  border: 2px dashed var(--gray);
+  background: transparent;
+  color: var(--gray);
+  border-radius: 8px;
+  outline: none;
+}
+.addPurchaseButton:focus-visible {
+  border-color: var(--black);
+  color: var(--black);
+}
+.addPurchaseButton:hover {
+  cursor: pointer;
+  border-color: var(--black);
+  color: var(--black);
 }
 .finalFart {
   margin-top: 28px;

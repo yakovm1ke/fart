@@ -1,4 +1,5 @@
-<script setup lang='ts'>
+<script setup lang='ts'>import { Ref } from 'vue'
+
 export type ButtonVariants = 'primary' | 'circle' | 'none'
 export type ButtonProps = {
   fill?: boolean
@@ -14,6 +15,8 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 const emit = defineEmits(['click'])
 const style = useCssModule()
 
+const buttonRef: Ref<HTMLButtonElement | null> = ref(null)
+
 const variantClass = computed(() => {
   switch(props.variant) {
     case('primary'):
@@ -24,10 +27,19 @@ const variantClass = computed(() => {
       return
   }
 })
+
+function focus() {
+  buttonRef.value?.focus()
+}
+
+defineExpose({
+  focus
+})
 </script>
 
 <template>
   <button
+    ref='buttonRef'
     @click="emit('click')"
     :class='[fill && $style.fill, $style.button, variantClass]'
     :disabled='disabled'
@@ -46,6 +58,9 @@ const variantClass = computed(() => {
   background: none;
   color: var(--main);
   padding: 0;
+}
+.button:focus-visible {
+  outline: var(--border) var(--gray);
 }
 .button:hover {
   cursor: pointer;

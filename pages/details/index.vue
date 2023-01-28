@@ -50,7 +50,7 @@ function getUserTotalCost(user: User) {
 .users {
   margin-top: 28px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 20px;
 }
 </style>

@@ -52,32 +52,48 @@ function handleInput() {
   }
   emit('input', parseFloat(unmaskedValue))
 }
+
+function focus() {
+  inputRef.value?.focus()
+}
+
+defineExpose({
+  focus
+})
 </script>
 
 <template>
-  <input
-    ref='inputRef'
-    :class='$style.input'
-    :value='numberMask?.value'
-    :placeholder='placeholder'
-    @keyup='handleInput'
-  />
+  <div :class='$style.inputWrapper'>
+    <input
+      ref='inputRef'
+      :class='$style.input'
+      :value='numberMask?.value'
+      :placeholder='placeholder'
+      @keyup='handleInput'
+    />
+  </div>
 </template>
 
 <style module>
-.input {
+.inputWrapper {
+  display: flex;
   width: 100%;
   box-sizing: border-box;
-  padding: 10px;
+  padding: 8px;
+  border: var(--border) var(--gray);
   border-radius: 8px;
-  border: 1px solid var(--black);
+}
+.input {
+  flex-grow: 1;
+  box-sizing: border-box;
   outline: none;
+  border: none;
   font-size: inherit;
   font-weight: inherit;
   font-family: inherit;
+  padding: 0;
 }
-.input:active,
-.input:focus {
+.inputWrapper:has(.input:focus, .input:active) {
   border-color: var(--main);
 }
 .input::placeholder {

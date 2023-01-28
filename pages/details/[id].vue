@@ -23,9 +23,6 @@ if (!user) {
   router.push('/farting')
 }
 
-function getCostPerPerson(purchase: Purchase) {
-  return (purchase.cost ?? 0) / (purchase.users.length || 1)
-}
 const userTotalCost = computed(() => {
   return store.usersTotalCosts[userId] ?? 0
 })

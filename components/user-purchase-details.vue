@@ -12,37 +12,84 @@ const props = defineProps<UserPurchaseProps>()
 function getCostPerPerson(purchase: Purchase) {
   return (purchase.cost ?? 0) / (purchase.users.length || 1)
 }
+
+function getPurchaseParticipants(purchase: Purchase): User[] {
+  return purchase.users.filter(purchaseUser => purchaseUser.id !== props.user.id)
+}
 </script>
 
 <template>
-  <div>
+  <div :class='$style.userPurchaseDetails'>
     <div :class='$style.name'>
       {{ user.name }}
     </div>
     <div :class='$style.purchases'>
       <div v-if='!purchases.length'>Empty fart</div>
-      <div v-for='purchase in purchases'>
-        {{ purchase.title }} - <span :class='$style.cost'>{{ getFormattedNumber(getCostPerPerson(purchase)) }}</span>
+      <div
+        :class='$style.purchase'
+        v-for='purchase in purchases'
+      >
+        <div :class='$style.purchaseName'>{{ purchase.title }}</div>
+        <div>{{ getFormattedNumber(getCostPerPerson(purchase)) }}</div>
+        <div
+          :class='$style.caption'
+          v-if='getPurchaseParticipants(purchase).length > 0'
+        >
+          split with {{ getPurchaseParticipants(purchase).map(user => user.name).join(', ') }}
+        </div>
       </div>
-      <div>
-        <span :class='$style.cost'>Total</span> - <span :class='$style.cost'>{{ getFormattedNumber(totalCost) }}</span>
+      <div :class='$style.total'>
+        <div :class='$style.totalRow'>
+          <div>Total</div>
+          <div>{{ getFormattedNumber(totalCost) }}</div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <style module>
-.name {
-  font-weight: 600;
-  color: var(--main);
-}
-.purchases {
-  margin-top: 12px;
+.userPurchaseDetails {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
-.cost {
+.purchase {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+}
+.name {
   font-weight: 600;
+  font-size: 28px;
+  color: var(--black);
+}
+.purchases {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.purchaseName {
+  font-weight: 600;
+}
+.total {
+  display: flex;
+  flex-grow: 1;
+  align-items: end;
+}
+.caption {
+  font-size: 12px;
+  color: var(--gray);
+}
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+  font-weight: 600;
+  border-top: var(--border);
+  padding-top: 4px;
 }
 </style>

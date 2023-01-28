@@ -5,6 +5,7 @@ import Button from './ui/button.vue';
 import InputNumber from './ui/input-number.vue';
 import Input from './ui/input.vue';
 import Tag from './ui/tag.vue';
+import { Ref } from 'vue';
 
 export type PurchaseProps = {
   order: number
@@ -20,6 +21,7 @@ export type PurchaseEmits = {
 
 const props = defineProps<PurchaseProps>()
 const emit = defineEmits<PurchaseEmits>()
+const purchaseTitleRef: Ref<typeof Input | null> = ref(null)
 
 const costPerPerson = computed(() => {
   const usersLength = props.purchase.users.length
@@ -30,6 +32,14 @@ const costPerPerson = computed(() => {
 function isUserSelected(id: string) {
   return props.purchase.users.some(user => user.id === id)
 }
+
+function focus() {
+  purchaseTitleRef.value?.focus()
+}
+
+defineExpose({
+  focus
+})
 </script>
 
 <template>
@@ -37,6 +47,7 @@ function isUserSelected(id: string) {
     <div :class='$style.header'>{{ order }}</div>
     <div :class='$style.content'>
       <Input
+        ref='purchaseTitleRef'
         :value='purchase.title'
         placeholder='Purchase'
         @input='(title) => emit("changeTitle", title)'
@@ -74,7 +85,7 @@ function isUserSelected(id: string) {
 .purchase {
   width: 100%;
   box-sizing: border-box;
-  border: 1px solid var(--black);
+  border: var(--border);
   border-radius: 8px;
   overflow: hidden;
 }
@@ -85,7 +96,7 @@ function isUserSelected(id: string) {
   background: var(--main);
   color: var(--white);
   font-weight: 600;
-  border-bottom: 1px solid var(--black);
+  border-bottom: var(--border) var(--black);
 }
 .content {
   padding: 20px;
@@ -102,6 +113,7 @@ function isUserSelected(id: string) {
 .costPerPerson {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 12px;
 }
 .cost {

@@ -9,20 +9,32 @@ const emit = defineEmits(['click'])
 
 
 <template>
-  <div
+  <button
+    tabindex='0'
     :class='[$style.tag, selected && $style.selected]'
     @click='emit("click")'
   >
     {{ label }}
-  </div>
+  </button>
 </template>
 
 <style module>
 .tag {
   padding: 8px 24px;
   color: var(--black);
-  border: 1px solid var(--black);
+  border: var(--border) var(--gray);
   border-radius: 8px;
+  background: transparent;
+  font-weight: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  outline: none;
+}
+.tag:focus-visible {
+  border-color: var(--black);
+}
+.tag.selected:focus-visible {
+  border-style: dashed;
 }
 .tag:hover {
   cursor: pointer;
@@ -34,5 +46,6 @@ const emit = defineEmits(['click'])
 .selected {
   background: var(--main);
   color: var(--white);
+  border-color: var(--black);
 }
 </style>
