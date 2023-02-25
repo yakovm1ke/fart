@@ -1,14 +1,37 @@
 <script lang='ts' setup>
+import {computed, useCssModule} from 'vue'
+
+export type LinkThemes = 'light' | 'dark'
+
+type BaseLinkProps = {
+  theme?: LinkThemes
+}
 type BaseLinkEmits = {
   (e: 'click', event: MouseEvent): void
 }
+
+const style = useCssModule()
+
 const emit = defineEmits<BaseLinkEmits>()
+const props = withDefaults(defineProps<BaseLinkProps>(), {
+	theme: 'dark',
+})
+
+const themeClass = computed(() => {
+	switch(props.theme) {
+	case('light'):
+		return style['light']
+	case('dark'):
+	default:
+		return ''
+	}
+})
 </script>
 
 <template>
   <div
     @click="(e) => emit('click', e)"
-    :class='$style.baseLink'
+    :class='[$style.baseLink, themeClass]'
   >
     <slot></slot>
   </div>
@@ -25,5 +48,8 @@ const emit = defineEmits<BaseLinkEmits>()
 .baseLink:hover {
   color: var(--main);
   cursor: pointer;
+}
+.light {
+  color: var(--white);
 }
 </style>

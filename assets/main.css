@@ -3,7 +3,9 @@
 :root {
   --main: #F48343;
   --black: #282828;
+  --lightGray: #f6f6f6;
   --gray: #ABABAB;
+  --darkGray: #424242;
   --white: #ffffff;
   --border: 2px solid;
 

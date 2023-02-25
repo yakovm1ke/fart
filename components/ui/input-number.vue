@@ -69,6 +69,7 @@ defineExpose({
     :value="numberMask?.value ?? ''"
     :placeholder='props.placeholder'
     @keyup='handleInput'
+		inputmode='decimal'
   >
     <template #after>
       <slot name='after'></slot>

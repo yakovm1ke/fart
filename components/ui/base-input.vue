@@ -1,9 +1,12 @@
 <script setup lang='ts'>
 import { Ref, ref } from 'vue'
 
+type InputModes = 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search'
+
 type BaseInputProps = {
   value: string
   placeholder?: string
+  inputmode?: InputModes
 }
 type BaseInputEmits = {
   (e: 'input', value: string): void
@@ -41,6 +44,7 @@ defineExpose({
       :class='$style.input'
       :value="props.value"
       :placeholder="props.placeholder"
+      :inputmode='props.inputmode'
       @input="handleInput"
       @keydown='emit("keydown", $event)'
       @keyup='emit("keyup", $event)'
@@ -53,7 +57,8 @@ defineExpose({
 .inputWrapper {
   width: 100%;
   box-sizing: border-box;
-  padding: 8px;
+  align-items: center;
+  padding: 12px;
   border-radius: 8px;
   gap: 8px;
   border: var(--border) var(--gray);
@@ -70,7 +75,6 @@ defineExpose({
   padding: 0;
   background: transparent;
 }
-.inputWrapper:hover,
 .inputWrapper:has(.input:focus-visible) {
   border-color: var(--main);
 }

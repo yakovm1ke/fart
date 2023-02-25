@@ -1,6 +1,6 @@
 <script lang='ts' setup>
 import { useMainStore } from '@/stores/main'
-import Purchase from '~~/components/purchase.vue'
+import Purchase from '@/components/purchase.vue'
 import { storeToRefs } from 'pinia'
 import { getFormattedNumber } from '@/helpers'
 import { Ref } from 'vue'
@@ -34,9 +34,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div :class='$style.heading'>
-      FARTING...
-    </div>
+  <div :class='$style.container'>
     <div :class='$style.purchases'>
       <Purchase
         ref='purchasesRefs'
@@ -57,44 +55,60 @@ onMounted(() => {
         Add purchase
       </button>
     </div>
-    <div :class='$style.finalFart'>
-      <div :class='$style.heading'>FINAL FART</div>
+
+    <div :class='$style.infoBlock'>
+      <div :class='$style.title'>
+        FINAL FART
+      </div>
       <div
         :class='$style.costRow'
         v-for='(user, index) in users'
         :key='index'
       >
-        <UiNuxtLink
-          :class='$style.link'
-          :to='`/details/${user.id}`'
-        >
+        <div>
           {{ user.name }}
-        </UiNuxtLink>
+        </div>
         <div :class='$style.cost'>
           {{ getFormattedNumber(store.usersTotalCosts[user.id]) }}
         </div>
       </div>
+      <div :class='$style.separator'></div>
       <div :class='$style.costRow'>
-        <UiNuxtLink
-          :class='$style.link'
-          to='/details'
-        >
-          <div :class='$style.cost'>
-            Total
-          </div>
-        </UiNuxtLink>
+        <div :class='$style.cost'>
+          Total
+        </div>
         <div :class='$style.cost'>{{ getFormattedNumber(store.totalCost) }}</div>
       </div>
+      <UiNuxtLink to='/details'>
+        Show details
+      </UiNuxtLink>
     </div>
+
+    <div :class='$style.bottomBar'>
+      <div :class='$style.costRow'>
+        <div :class='$style.cost'>
+          Total
+        </div>
+        <div :class='$style.cost'>
+          {{ getFormattedNumber(store.totalCost) }}
+        </div>
+      </div>
+      <UiNuxtLink to="/details">
+        Show details
+      </UiNuxtLink>
+    </div>
+  </div>
 </template>
 
 <style module>
-.heading {
-  font-weight: 600;
-  color: var(--main);
+.container {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding-bottom: 60px;
 }
 .purchases {
-  margin-top: 28px;
+  flex-grow: 1;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 16px;
@@ -104,11 +118,11 @@ onMounted(() => {
   font-weight: 600;
   font-family: inherit;
   width: 100%;
-  min-height: 302px;
+  min-height: 280px;
   border: 2px dashed var(--gray);
   background: transparent;
   color: var(--gray);
-  border-radius: 8px;
+  border-radius: 12px;
   outline: none;
 }
 .addPurchaseButton:focus-visible {
@@ -120,11 +134,21 @@ onMounted(() => {
   border-color: var(--black);
   color: var(--black);
 }
-.finalFart {
-  margin-top: 28px;
+.infoBlock {
+  border: var(--border);
+  position: sticky;
+  top: 32px;
+  color: var(--black);
+  width: 240px;
+  border-radius: 12px;
+  padding: 20px 32px;
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+.separator {
+  width: 100%;
+  border-top: var(--border);
 }
 .costRow {
   display: flex;
@@ -138,5 +162,31 @@ onMounted(() => {
 }
 .cost {
   font-weight: 600;
+}
+.title {
+  font-weight: 600;
+  color: var(--main);
+  font-size: 24px;
+}
+.bottomBar {
+  display: none;
+}
+
+@media screen and (max-width: 860px) {
+  .infoBlock {
+    display: none;
+  }
+  .bottomBar {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 20px 32px;
+    box-sizing: border-box;
+    border-top: var(--border);
+    background: var(--lightGray);
+    width: 100%;
+    cursor: pointer;
+  }
 }
 </style>

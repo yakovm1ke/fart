@@ -2,9 +2,11 @@
 import { Purchase, useMainStore, User } from '@/stores/main'
 import { storeToRefs } from 'pinia'
 import UserPurchaseDetails from '@/components/user-purchase-details.vue'
-import { getFormattedNumber } from '~/helpers'
+import { downloadFile, getFormattedNumber } from '@/helpers'
 import { useRouter } from 'vue-router'
 import { useHead } from 'unhead'
+import Button from '@/components/ui/button.vue'
+import html2canvas from 'html2canvas'
 
 const router = useRouter()
 const store = useMainStore()
@@ -24,25 +26,46 @@ function getUserPurchases(user: User): Purchase[] {
 function getUserTotalCost(user: User) {
 	return store.usersTotalCosts[user.id] ?? 0
 }
+function captureScreenshot() {
+	const captureElement = document.body
+
+	if (!captureElement) return
+
+	html2canvas(captureElement).then(canvas => {
+		const imageUrl = canvas.toDataURL('image/png')
+		downloadFile(imageUrl, `Fart-${new Date().toLocaleDateString()}.png`)
+	})
+}
 </script>
 
 <template>
   <UiNuxtLink to='/farting'>
-    Go to farting
+    Back to farting
   </UiNuxtLink>
-  <div :class='$style.users'>
-    <UserPurchaseDetails
-      v-for='user in users'
-      :key='user.id'
-      :user='user'
-      :purchases='getUserPurchases(user)'
-      :total-cost='getUserTotalCost(user)'
-    />
+
+  <div id='capture'>
+    <div :class='$style.users'>
+      <UserPurchaseDetails
+        v-for='user in users'
+        :key='user.id'
+        :user='user'
+        :purchases='getUserPurchases(user)'
+        :total-cost='getUserTotalCost(user)'
+      />
+    </div>
+    <div :class='$style.total'>
+      <span :class='$style.totalTitle'>Total: </span>
+      <span>{{ getFormattedNumber(store.totalCost) }}</span>
+    </div>
   </div>
-  <div :class='$style.total'>
-    <span :class='$style.totalTitle'>Total: </span>
-    <span>{{ getFormattedNumber(store.totalCost) }}</span>
-  </div>
+
+  <Button
+    v-if='store.totalCost'
+    :class='$style.screenshotButton'
+    @click='captureScreenshot'
+  >
+    Capture screen
+  </Button>
 </template>
 
 <style module>
@@ -53,15 +76,13 @@ function getUserTotalCost(user: User) {
 .totalTitle {
   font-weight: 600;
 }
-.link {
-  color: var(--black);
-  text-decoration-color: var(--main);
-  font-weight: 300;
-}
 .users {
   margin-top: 28px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 20px;
+}
+.screenshotButton {
+  margin-top: 32px;
 }
 </style>

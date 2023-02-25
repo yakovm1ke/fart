@@ -1,16 +1,19 @@
 <script setup lang='ts'>import { Ref } from 'vue'
 import { useCssModule, ref, computed } from 'vue'
 
-export type ButtonVariants = 'primary' | 'circle' | 'none'
+export type ButtonVariants = 'primary' | 'light' | 'dark'
+export type ButtonSizes = 's' | 'm' | 'unwrapped'
 export type ButtonProps = {
   fill?: boolean
   variant?: ButtonVariants
+  size?: ButtonSizes
   disabled?: boolean
 }
 const props = withDefaults(defineProps<ButtonProps>(), {
 	disabled: false,
 	variant: 'primary',
 	fill: false,
+	size: 'm',
 })
 
 const emit = defineEmits(['click'])
@@ -18,15 +21,27 @@ const style = useCssModule()
 
 const buttonRef: Ref<HTMLButtonElement | null> = ref(null)
 
+const sizeClass = computed(() => {
+	switch(props.size) {
+	case('unwrapped'):
+		return style['unwrapped']
+	case('s'):
+		return style['small']
+	case('m'):
+	default:
+		return style['medium']
+	}
+})
+
 const variantClass = computed(() => {
 	switch(props.variant) {
+	case('light'):
+		return style['light']
+	case('dark'):
+		return style['dark']
+	default:
 	case('primary'):
 		return style['primary']
-	case('circle'):
-		return style['circle']
-	case('none'):
-	default:
-		return ''
 	}
 })
 
@@ -43,7 +58,12 @@ defineExpose({
   <button
     ref='buttonRef'
     @click="emit('click')"
-    :class='[fill && $style.fill, $style.button, variantClass]'
+    :class='[
+      fill && $style.fill,
+      $style.button,
+      variantClass,
+      sizeClass,
+    ]'
     :disabled='disabled'
   >
     <slot></slot>
@@ -51,6 +71,12 @@ defineExpose({
 </template>
 
 <style module>
+:root {
+  --mediumBorderRadius: 8px;
+  --mediumPadding: 16px;
+  --smallBorderRadius: 8px;
+  --smallPadding: 8px;
+}
 .button {
   font-weight: 600;
   font-size: inherit;
@@ -77,34 +103,31 @@ defineExpose({
 .fill {
   width: 100%;
 }
-.circle {
-  background: var(--gray);
-  width: 20px;
-  height: 20px;
-  border-radius: 32px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  color: white;
-}
-.circle:hover {
-  background: var(--main)
-}
-.circle:disabled {
-  background: var(--gray);
-  cursor: not-allowed;
-}
 .primary {
   background: var(--main);
-  padding: 16px;
-  border-radius: 8px;
   color: #fff;
 }
 .primary:disabled {
   background: var(--gray);
   cursor: not-allowed;
+}
+.light {
+  background: var(--white);
+  color: var(--black);
+}
+.dark {
+  background: var(--black);
+  color: var(--white);
+}
+.small {
+  padding: var(--smallPadding);
+  border-radius: var(--smallBorderRadius);
+}
+.medium {
+  padding: var(--mediumPadding);
+  border-radius: var(--mediumBorderRadius);
+}
+.unwrapped {
+  background: transparent;
 }
 </style>

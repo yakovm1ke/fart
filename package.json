@@ -21,6 +21,7 @@
   "dependencies": {
     "@pinia/nuxt": "^0.4.6",
     "@types/node": "^18.14.1",
+    "html2canvas": "^1.4.1",
     "imask": "^6.4.3",
     "nanoid": "^4.0.0",
     "pinia": "^2.0.29",

@@ -34,7 +34,7 @@ const userTotalCost = computed(() => {
     to='/farting'
     :class='$style.link'
   >
-    Go to farting
+    Back to farting
   </UiNuxtLink>
   <UserPurchaseDetails
     v-if='user'

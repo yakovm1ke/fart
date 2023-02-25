@@ -19,7 +19,7 @@ const emit = defineEmits(['click'])
 
 <style module>
 .tag {
-  padding: 4px 12px;
+  padding: 8px 12px;
   color: var(--black);
   border: var(--border) var(--gray);
   border-radius: 8px;

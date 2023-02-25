@@ -51,7 +51,19 @@ defineExpose({
 
 <template>
   <div :class='$style.purchase'>
-    <div :class='$style.header'>{{ order }}</div>
+    <div :class='$style.header'>
+      <div :class='$style.counter'>
+        {{ order }}
+      </div>
+      <Button
+        :class='$style.removeButton'
+        @click='emit("removePurchase")'
+        variant='dark'
+        size='unwrapped'
+      >
+        Remove
+      </Button>
+    </div>
     <div :class='$style.content'>
       <Input
         ref='purchaseTitleRef'
@@ -79,13 +91,6 @@ defineExpose({
         <div>Cost per person</div>
         <div :class='$style.cost'>{{ getFormattedNumber(costPerPerson) }}</div>
       </div>
-      <Button
-        :class='$style.removeButton'
-        @click='emit("removePurchase")'
-        variant='none'
-      >
-        Remove
-      </Button>
     </div>
   </div>
 </template>
@@ -95,14 +100,22 @@ defineExpose({
   width: 100%;
   box-sizing: border-box;
   border: var(--border);
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
+}
+.counter {
+  color: var(--white);
+  display: flex;
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
 }
 .header {
   display: flex;
-  justify-content: center;
-  padding: 10px;
   background: var(--main);
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 20px;
   color: var(--white);
   font-weight: 600;
   border-bottom: var(--border) var(--black);

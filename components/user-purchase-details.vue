@@ -1,5 +1,6 @@
 <script lang='ts' setup>
 import { Purchase, User } from '@/stores/main'
+import {computed} from 'vue'
 import { getFormattedNumber } from '@/helpers'
 
 export type UserPurchaseProps = {
@@ -8,6 +9,10 @@ export type UserPurchaseProps = {
   totalCost: number
 }
 const props = defineProps<UserPurchaseProps>()
+
+const sortedPurchases = computed(() => {
+	return [ ...props.purchases].sort((a, b) => getCostPerPerson(b) - getCostPerPerson(a))
+})
 
 function getCostPerPerson(purchase: Purchase) {
 	return (purchase.cost ?? 0) / (purchase.users.length || 1)
@@ -21,7 +26,7 @@ function getPurchaseParticipants(purchase: Purchase): User[] {
 <template>
   <div :class='$style.userPurchaseDetails'>
     <div :class='$style.name'>
-      {{ user.name }}
+      {{ user.name }} <span v-if='totalCost'>({{ getFormattedNumber(totalCost) }})</span>
     </div>
     <div :class='$style.purchases'>
       <div
@@ -32,7 +37,7 @@ function getPurchaseParticipants(purchase: Purchase): User[] {
       </div>
       <div
         :class='$style.purchase'
-        v-for='purchase, index in purchases'
+        v-for='purchase, index in sortedPurchases'
         :key='`purchase-${index}`'
       >
         <div :class='$style.purchaseName'>{{ purchase.title }}</div>
@@ -42,12 +47,6 @@ function getPurchaseParticipants(purchase: Purchase): User[] {
           v-if='getPurchaseParticipants(purchase).length > 0'
         >
           split with {{ getPurchaseParticipants(purchase).map(user => user.name).join(', ') }}
-        </div>
-      </div>
-      <div :class='$style.total' v-if='totalCost'>
-        <div :class='$style.totalRow'>
-          <div>Total</div>
-          <div>{{ getFormattedNumber(totalCost) }}</div>
         </div>
       </div>
     </div>

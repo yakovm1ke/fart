@@ -54,8 +54,7 @@ useHead({
 </script>
 
 <template>
-  <div>
-    <div :class='$style.heading'>START FART</div>
+  <div :class='$style.container'>
     <div :class='$style.fields'>
       <Input
         v-for='(user, index) in users'
@@ -67,62 +66,57 @@ useHead({
         @keydown='(event) => focusNext(event, index)'
       >
         <template #after>
-          <Button
+          <button
+            :class='$style.deleteIcon'
             tabindex='-1'
             v-if='users.length > 2'
-            variant='circle'
             @click='store.deleteUser(index)'
           >
-            -
-          </Button>
+            —
+          </button>
         </template>
       </Input>
-    </div>
-    <Button
-      @click='handleUserAdd'
-      variant='none'
-      :class='$style.addButton'
-      ref='addButtonRef'
-    >
-      Add
-    </Button>
-    <Button
-      fill
-      variant='primary'
-      @click='handleSubmit'
-      :class='$style.submitButton'
-      :disabled='!isUsersValid'
-    >
-      Let's fart*
-    </Button>
-    <div :class='$style.caption'>
-      * Fart is an abbreviation for the phrase "Fair Cart" which is frequently used in Yerevan, Armenia
+      <Button
+        fill
+        @click='handleUserAdd'
+        variant='dark'
+        :class='$style.addButton'
+        ref='addButtonRef'
+      >
+        Add
+      </Button>
+      <Button
+        fill
+        variant='primary'
+        @click='handleSubmit'
+        :disabled='!isUsersValid'
+      >
+        Let's fart
+      </Button>
     </div>
   </div>
 </template>
 
 <style module>
-.heading {
-  font-weight: 600;
-  color: var(--main);
-}
-.fields {
-  margin-top: 28px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
+.container {
+  max-width: 400px;
+  margin: 0 auto;
   box-sizing: border-box;
 }
-.addButton {
-  margin-top: 16px;
+.fields {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  box-sizing: border-box;
 }
-.submitButton {
-  margin-top: 28px;
-}
-.caption {
-  margin-top: 8px;
-  font-size: 12px;
-  color: var(--gray);
+.deleteIcon {
+  background: none;
+  font-weight: 900;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
 }
 
 @media screen and (max-width: 500px) {
