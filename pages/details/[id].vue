@@ -1,8 +1,9 @@
 <script lang='ts' setup>
-import Button from '@/components/ui/button.vue'
-import { getFormattedNumber } from '@/helpers';
-import { Purchase, useMainStore } from '@/stores/main';
-import { storeToRefs } from 'pinia';
+import { useMainStore } from '@/stores/main'
+import { storeToRefs } from 'pinia'
+import { useRouter, useRoute } from 'vue-router'
+import { computed } from 'vue'
+import { useHead } from 'unhead'
 
 const store = useMainStore()
 const router = useRouter()
@@ -13,28 +14,28 @@ const userId = Array.isArray(route.params['id']) ? route.params['id'][0] : route
 
 const user = users.value.find(user => user.id === userId)
 const userPurchases = purchases.value
-  .filter(purchase => purchase.users.some(user => user.id === userId))
+	.filter(purchase => purchase.users.some(user => user.id === userId))
 
 useHead({
-  title: user?.name
+	title: user?.name,
 })
 
 if (!user) {
-  router.push('/farting')
+	router.push('/farting')
 }
 
 const userTotalCost = computed(() => {
-  return store.usersTotalCosts[userId] ?? 0
+	return store.usersTotalCosts[userId] ?? 0
 })
 </script>
 
 <template>
-  <NuxtLink
+  <UiNuxtLink
     to='/farting'
     :class='$style.link'
   >
     Go to farting
-  </NuxtLink>
+  </UiNuxtLink>
   <UserPurchaseDetails
     v-if='user'
     :class='$style.fartingDetails'

@@ -1,5 +1,6 @@
 <script setup lang='ts'>
-import { Ref } from 'vue';
+import { Ref, ref } from 'vue'
+import BaseInput from './base-input.vue'
 
 export type InputProps = {
   value: string
@@ -15,61 +16,28 @@ const props = defineProps<InputProps>()
 const emit = defineEmits<InputEmits>()
 
 function focus() {
-  inputRef.value?.focus()
-}
-
-function handleInput(event: Event) {
-  emit('input', (event.target as HTMLInputElement)?.value)
+	inputRef.value?.focus()
 }
 
 defineExpose({
-  focus
+	focus,
+	inputRef,
 })
 </script>
 
 <template>
-  <div
-    :class='$style.inputWrapper'
-    @click='focus'
+  <BaseInput
+    :value='props.value'
+    :placeholder='props.placeholder'
+    @input='value => emit("input", value)'
+    @keydown='emit("keydown", $event)'
+    ref='inputRef'
   >
-    <slot name='beforeInput'></slot>
-    <input
-      ref='inputRef'
-      :class='$style.input'
-      :value="value"
-      :placeholder="placeholder"
-      @input="handleInput"
-      @keydown='emit("keydown", $event)'
-    />
-    <slot name='afterInput'></slot>
-  </div>
+    <template #after>
+      <slot name='after'></slot>
+    </template>
+    <template #before>
+      <slot name='before'></slot>
+    </template>
+  </BaseInput>
 </template>
-
-<style module>
-.inputWrapper {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 8px;
-  border-radius: 8px;
-  gap: 8px;
-  border: var(--border) var(--gray);
-  display: flex;
-  cursor: text;
-}
-.input {
-  flex-grow: 1;
-  border: none;
-  outline: none;
-  font-size: inherit;
-  font-weight: inherit;
-  font-family: inherit;
-  padding: 0;
-}
-.inputWrapper:has(.input:focus-visible) {
-  border-color: var(--main);
-}
-.input::placeholder {
-  color: var(--gray);
-}
-</style>
-

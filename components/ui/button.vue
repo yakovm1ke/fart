@@ -1,4 +1,5 @@
 <script setup lang='ts'>import { Ref } from 'vue'
+import { useCssModule, ref, computed } from 'vue'
 
 export type ButtonVariants = 'primary' | 'circle' | 'none'
 export type ButtonProps = {
@@ -7,9 +8,9 @@ export type ButtonProps = {
   disabled?: boolean
 }
 const props = withDefaults(defineProps<ButtonProps>(), {
-  disabled: false,
-  variant: 'primary',
-  fill: false
+	disabled: false,
+	variant: 'primary',
+	fill: false,
 })
 
 const emit = defineEmits(['click'])
@@ -18,22 +19,23 @@ const style = useCssModule()
 const buttonRef: Ref<HTMLButtonElement | null> = ref(null)
 
 const variantClass = computed(() => {
-  switch(props.variant) {
-    case('primary'):
-      return style['primary']
-    case('circle'):
-      return style['circle']
-    case('none'):
-      return
-  }
+	switch(props.variant) {
+	case('primary'):
+		return style['primary']
+	case('circle'):
+		return style['circle']
+	case('none'):
+	default:
+		return ''
+	}
 })
 
 function focus() {
-  buttonRef.value?.focus()
+	buttonRef.value?.focus()
 }
 
 defineExpose({
-  focus
+	focus,
 })
 </script>
 
@@ -76,7 +78,7 @@ defineExpose({
   width: 100%;
 }
 .circle {
-  background: var(--black);
+  background: var(--gray);
   width: 20px;
   height: 20px;
   border-radius: 32px;
@@ -87,6 +89,9 @@ defineExpose({
   align-items: center;
   box-sizing: border-box;
   color: white;
+}
+.circle:hover {
+  background: var(--main)
 }
 .circle:disabled {
   background: var(--gray);

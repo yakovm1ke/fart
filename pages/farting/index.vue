@@ -1,10 +1,13 @@
 <script lang='ts' setup>
-import { useMainStore } from '@/stores/main';
-import Purchase from '~~/components/purchase.vue';
-import { storeToRefs } from 'pinia';
-import Button from '@/components/ui/button.vue';
-import { getFormattedNumber } from '@/helpers';
-import { Ref } from 'vue';
+import { useMainStore } from '@/stores/main'
+import Purchase from '~~/components/purchase.vue'
+import { storeToRefs } from 'pinia'
+import { getFormattedNumber } from '@/helpers'
+import { Ref } from 'vue'
+import { useHead } from 'unhead'
+import { useRouter } from 'vue-router'
+import {ref, onMounted} from 'vue'
+import { nextTick } from 'vue'
 
 const router = useRouter()
 const store = useMainStore()
@@ -12,26 +15,25 @@ const { users, purchases, isUsersValid } = storeToRefs(store)
 const purchasesRefs: Ref<typeof Purchase[]> = ref([])
 
 if (!isUsersValid.value) {
-  router.push('/')
+	router.push('/')
 }
 
 async function handlePurchaseAdd() {
-  store.addPurchase()
-  await nextTick()
-  purchasesRefs.value?.[purchasesRefs.value.length - 1]?.focus()
+	store.addPurchase()
+	await nextTick()
+	purchasesRefs.value?.[purchasesRefs.value.length - 1]?.focus()
 }
 
 useHead({
-  title: 'Farting'
+	title: 'Farting',
 })
 
 onMounted(() => {
-  purchasesRefs.value[0].focus()
+	purchasesRefs.value[0]?.focus()
 })
 </script>
 
 <template>
-  <div>
     <div :class='$style.heading'>
       FARTING...
     </div>
@@ -62,29 +64,28 @@ onMounted(() => {
         v-for='(user, index) in users'
         :key='index'
       >
-        <NuxtLink
+        <UiNuxtLink
           :class='$style.link'
           :to='`/details/${user.id}`'
         >
           {{ user.name }}
-        </NuxtLink>
+        </UiNuxtLink>
         <div :class='$style.cost'>
           {{ getFormattedNumber(store.usersTotalCosts[user.id]) }}
         </div>
       </div>
       <div :class='$style.costRow'>
-        <NuxtLink
+        <UiNuxtLink
           :class='$style.link'
           to='/details'
         >
           <div :class='$style.cost'>
             Total
           </div>
-        </NuxtLink>
+        </UiNuxtLink>
         <div :class='$style.cost'>{{ getFormattedNumber(store.totalCost) }}</div>
       </div>
     </div>
-  </div>
 </template>
 
 <style module>
@@ -103,7 +104,7 @@ onMounted(() => {
   font-weight: 600;
   font-family: inherit;
   width: 100%;
-  min-height: 306px;
+  min-height: 302px;
   border: 2px dashed var(--gray);
   background: transparent;
   color: var(--gray);

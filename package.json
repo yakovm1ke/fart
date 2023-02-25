@@ -11,10 +11,16 @@
     "vue": "latest"
   },
   "devDependencies": {
-    "nuxt": "^3.0.0"
+    "@nuxtjs/eslint-config-typescript": "^12.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.53.0",
+    "@typescript-eslint/parser": "^5.53.0",
+    "eslint": "^8.34.0",
+    "eslint-plugin-vue": "^9.9.0",
+    "nuxt": "^3.2.2"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.6",
+    "@types/node": "^18.14.1",
     "imask": "^6.4.3",
     "nanoid": "^4.0.0",
     "pinia": "^2.0.29",

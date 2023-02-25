@@ -1,11 +1,11 @@
 <script lang='ts' setup>
-import { Purchase, User } from '@/stores/main';
-import { getFormattedNumber } from '@/helpers';
-import Button from './ui/button.vue';
-import InputNumber from './ui/input-number.vue';
-import Input from './ui/input.vue';
-import Tag from './ui/tag.vue';
-import { Ref } from 'vue';
+import { Purchase, User } from '@/stores/main'
+import { getFormattedNumber } from '@/helpers'
+import Button from './ui/button.vue'
+import InputNumber from './ui/input-number.vue'
+import Input from './ui/input.vue'
+import Tag from './ui/tag.vue'
+import { Ref, ref, computed } from 'vue'
 
 export type PurchaseProps = {
   order: number
@@ -13,10 +13,10 @@ export type PurchaseProps = {
   users: User[]
 }
 export type PurchaseEmits = {
-  (e: "changeTitle", title: string): void
-  (e: "changeCost", cost: number | null): void
-  (e: "toggleUser", user: User): void
-  (e: "removePurchase"): void
+  (e: 'changeTitle', title: string): void
+  (e: 'changeCost', cost: number | null): void
+  (e: 'toggleUser', user: User): void
+  (e: 'removePurchase'): void
 }
 
 const props = defineProps<PurchaseProps>()
@@ -25,27 +25,27 @@ const purchaseTitleRef: Ref<typeof Input | null> = ref(null)
 const costRef: Ref<typeof InputNumber | null> = ref(null)
 
 const costPerPerson = computed(() => {
-  const usersLength = props.purchase.users.length
-  if (!usersLength) return 0
-  return (props.purchase.cost ?? 0) / usersLength
+	const usersLength = props.purchase.users.length
+	if (!usersLength) return 0
+	return (props.purchase.cost ?? 0) / usersLength
 })
 
 function isUserSelected(id: string) {
-  return props.purchase.users.some(user => user.id === id)
+	return props.purchase.users.some(user => user.id === id)
 }
 
 function handleKeydownOnTitle(event: KeyboardEvent) {
-  if (event.key !== 'Enter') return
+	if (event.key !== 'Enter') return
 
-  costRef.value?.focus()
+	costRef.value?.focus()
 }
 
 function focus() {
-  purchaseTitleRef.value?.focus()
+	purchaseTitleRef.value?.focus()
 }
 
 defineExpose({
-  focus
+	focus,
 })
 </script>
 
@@ -116,7 +116,7 @@ defineExpose({
 .tags {
   width: 100%;
   display: flex;
-  gap: 12px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 .costPerPerson {

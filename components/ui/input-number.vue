@@ -1,6 +1,7 @@
 <script lang='ts' setup>
 import IMask, { InputMask } from 'imask'
-import { Ref } from 'vue'
+import { Ref, ref, onMounted } from 'vue'
+import BaseInput from './base-input.vue'
 
 export type InputNumberProps = {
   value: number | null
@@ -12,91 +13,68 @@ export type InputNumberEmits = {
   (e: 'input', value: number | null): void
 }
 
-const inputRef: Ref<HTMLInputElement | null> = ref(null)
+const inputRef: Ref<typeof BaseInput | null> = ref(null)
 const props = withDefaults(defineProps<InputNumberProps>(), {
-  max: Number.MAX_SAFE_INTEGER,
-  min: 0,
+	max: Number.MAX_SAFE_INTEGER,
+	min: 0,
 })
 const emit = defineEmits<InputNumberEmits>()
 
 const numberMaskOptions = {
-  mask: Number,  // enable number mask
+	mask: Number,  // enable number mask
 
-  scale: 2,  // digits after point, 0 for integers
-  signed: false,  // disallow negative
-  thousandsSeparator: ' ',  // any single char
-  padFractionalZeros: false,  // if true, then pads zeros at end to the length of scale
-  normalizeZeros: true,  // appends or removes zeros at ends
-  radix: ',',  // fractional delimiter
-  mapToRadix: ['.'],  // symbols to process as radix
+	scale: 2,  // digits after point, 0 for integers
+	signed: false,  // disallow negative
+	thousandsSeparator: ' ',  // any single char
+	padFractionalZeros: false,  // if true, then pads zeros at end to the length of scale
+	normalizeZeros: true,  // appends or removes zeros at ends
+	radix: ',',  // fractional delimiter
+	mapToRadix: ['.'],  // symbols to process as radix
 
-  // additional number interval options (e.g.)
-  min: props.min,
-  max: props.max,
+	// additional number interval options (e.g.)
+	min: props.min,
+	max: props.max,
 }
 
 let numberMask: InputMask<typeof numberMaskOptions> | null = null
 
 onMounted(() => {
-  if (inputRef.value) {
-    inputRef.value.value = String(props.value)
-    numberMask = IMask(inputRef.value, numberMaskOptions);
-  }
+	if (inputRef.value) {
+		inputRef.value.inputRef.value = String(props.value)
+		numberMask = IMask(inputRef.value.inputRef, numberMaskOptions)
+	}
 })
 
 function handleInput() {
-  const unmaskedValue = numberMask?.unmaskedValue
-  if (!unmaskedValue || isNaN(parseFloat(unmaskedValue))) {
-    emit('input', null)
-    return
-  }
-  emit('input', parseFloat(unmaskedValue))
+	const unmaskedValue = numberMask?.unmaskedValue
+	if (!unmaskedValue || isNaN(parseFloat(unmaskedValue))) {
+		emit('input', null)
+		return
+	}
+	emit('input', parseFloat(unmaskedValue))
 }
 
 function focus() {
-  inputRef.value?.focus()
+	inputRef.value?.focus()
 }
 
 defineExpose({
-  focus
+	focus,
 })
 </script>
 
 <template>
-  <div :class='$style.inputWrapper'>
-    <input
-      ref='inputRef'
-      :class='$style.input'
-      :value='numberMask?.value'
-      :placeholder='placeholder'
-      @keyup='handleInput'
-    />
-  </div>
+  <BaseInput
+    ref='inputRef'
+    :value="numberMask?.value ?? ''"
+    :placeholder='props.placeholder'
+    @keyup='handleInput'
+  >
+    <template #after>
+      <slot name='after'></slot>
+    </template>
+    <template #before>
+      <slot name='before'></slot>
+    </template>
+  </BaseInput>
 </template>
-
-<style module>
-.inputWrapper {
-  display: flex;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 8px;
-  border: var(--border) var(--gray);
-  border-radius: 8px;
-}
-.input {
-  flex-grow: 1;
-  box-sizing: border-box;
-  outline: none;
-  border: none;
-  font-size: inherit;
-  font-weight: inherit;
-  font-family: inherit;
-  padding: 0;
-}
-.inputWrapper:has(.input:focus, .input:active) {
-  border-color: var(--main);
-}
-.input::placeholder {
-  color: var(--gray);
-}
-</style>

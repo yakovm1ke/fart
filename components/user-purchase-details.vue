@@ -10,11 +10,11 @@ export type UserPurchaseProps = {
 const props = defineProps<UserPurchaseProps>()
 
 function getCostPerPerson(purchase: Purchase) {
-  return (purchase.cost ?? 0) / (purchase.users.length || 1)
+	return (purchase.cost ?? 0) / (purchase.users.length || 1)
 }
 
 function getPurchaseParticipants(purchase: Purchase): User[] {
-  return purchase.users.filter(purchaseUser => purchaseUser.id !== props.user.id)
+	return purchase.users.filter(purchaseUser => purchaseUser.id !== props.user.id)
 }
 </script>
 
@@ -24,10 +24,16 @@ function getPurchaseParticipants(purchase: Purchase): User[] {
       {{ user.name }}
     </div>
     <div :class='$style.purchases'>
-      <div v-if='!purchases.length'>Empty fart</div>
+      <div
+        v-if='!purchases.length'
+        :class='$style.emptyFart'
+      >
+        Empty fart
+      </div>
       <div
         :class='$style.purchase'
-        v-for='purchase in purchases'
+        v-for='purchase, index in purchases'
+        :key='`purchase-${index}`'
       >
         <div :class='$style.purchaseName'>{{ purchase.title }}</div>
         <div>{{ getFormattedNumber(getCostPerPerson(purchase)) }}</div>
@@ -38,7 +44,7 @@ function getPurchaseParticipants(purchase: Purchase): User[] {
           split with {{ getPurchaseParticipants(purchase).map(user => user.name).join(', ') }}
         </div>
       </div>
-      <div :class='$style.total'>
+      <div :class='$style.total' v-if='totalCost'>
         <div :class='$style.totalRow'>
           <div>Total</div>
           <div>{{ getFormattedNumber(totalCost) }}</div>
@@ -60,6 +66,9 @@ function getPurchaseParticipants(purchase: Purchase): User[] {
   white-space: nowrap;
   display: flex;
   flex-direction: column;
+}
+.emptyFart {
+  color: var(--gray);
 }
 .name {
   font-weight: 600;

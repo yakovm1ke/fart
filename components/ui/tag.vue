@@ -7,20 +7,19 @@ const props = defineProps<TagProps>()
 const emit = defineEmits(['click'])
 </script>
 
-
 <template>
   <button
     tabindex='0'
-    :class='[$style.tag, selected && $style.selected]'
+    :class='[$style.tag, props.selected && $style.selected]'
     @click='emit("click")'
   >
-    {{ label }}
+    {{ props.label }}
   </button>
 </template>
 
 <style module>
 .tag {
-  padding: 8px 24px;
+  padding: 4px 12px;
   color: var(--black);
   border: var(--border) var(--gray);
   border-radius: 8px;
@@ -39,6 +38,9 @@ const emit = defineEmits(['click'])
 .tag:hover {
   cursor: pointer;
   filter: brightness(0.96);
+}
+.tag:not(.selected):hover {
+  border-color: var(--main);
 }
 .tag:active {
   transform: translateY(2px);

@@ -1,9 +1,11 @@
 <script setup lang='ts'>
-import Input from '@/components/ui/input.vue';
-import Button from '@/components/ui/button.vue';
-import { useMainStore } from '@/stores/main';
-import { storeToRefs } from 'pinia';
-import { Ref, ref, VNode, VNodeRef } from 'vue';
+import Input from '@/components/ui/input.vue'
+import Button from '@/components/ui/button.vue'
+import { useMainStore } from '@/stores/main'
+import { storeToRefs } from 'pinia'
+import { Ref, ref, nextTick } from 'vue'
+import { useRouter } from 'vue-router'
+import { useHead } from 'unhead'
 
 const store = useMainStore()
 const router = useRouter()
@@ -14,40 +16,40 @@ const fieldsRefs: Ref<typeof Input[]> = ref([])
 const addButtonRef: Ref<typeof Button | null> = ref(null)
 
 if (!users.value.length) {
-  router.push('/farting')
+	router.push('/farting')
 }
 
 function handleUserChange(index: number, name: string) {
-  users.value[index].name = name
+	users.value[index].name = name
 }
 
 function focusNext(event: KeyboardEvent, index: number) {
-  if (event.key !== 'Enter') return
+	if (event.key !== 'Enter') return
 
-  if (index === fieldsRefs.value.length - 1) {
-    handleSubmit()
-    return
-  }
+	if (index === fieldsRefs.value.length - 1) {
+		handleSubmit()
+		return
+	}
 
-  if (!!users.value[index].name) {
-    fieldsRefs.value[index + 1].focus()
-    return
-  }
+	if (users.value[index].name) {
+		fieldsRefs.value[index + 1].focus()
+		return
+	}
 }
 
 async function handleUserAdd() {
-  store.addUser()
-  await nextTick()
-  fieldsRefs.value[fieldsRefs.value.length - 1].focus()
+	store.addUser()
+	await nextTick()
+	fieldsRefs.value[fieldsRefs.value.length - 1].focus()
 }
 
 function handleSubmit() {
-  if (!isUsersValid.value) return
-  router.push('/farting')
+	if (!isUsersValid.value) return
+	router.push('/farting')
 }
 
 useHead({
-  title: 'Start fart'
+	title: 'Start fart',
 })
 </script>
 
@@ -64,7 +66,7 @@ useHead({
         @input='(name) => handleUserChange(index, name)'
         @keydown='(event) => focusNext(event, index)'
       >
-        <template #afterInput>
+        <template #after>
           <Button
             tabindex='-1'
             v-if='users.length > 2'
