@@ -1,8 +1,14 @@
 <script lang='ts' setup>
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+import {computed} from 'vue'
 import Button from './ui/button.vue'
 
 const router = useRouter()
+const route = useRoute()
+
+const isAgainButtonShown = computed(() => {
+	return route.path !== '/'
+})
 </script>
 
 <template>
@@ -11,6 +17,7 @@ const router = useRouter()
       FART
     </div>
     <Button
+      v-if='isAgainButtonShown'
       variant='light'
       size='s'
       @click='router.push("/")'
@@ -24,6 +31,7 @@ const router = useRouter()
 .header {
   width: 100%;
   box-sizing: border-box;
+  min-height: 68px;
   display: flex;
   padding: 12px 32px;
   gap: 8px;
