@@ -1,11 +1,11 @@
 <script lang='ts' setup>
-import { Purchase, User } from '@/stores/main'
 import { getFormattedNumber } from '@/helpers'
 import Button from './ui/button.vue'
 import InputNumber from './ui/input-number.vue'
 import Input from './ui/input.vue'
 import Tag from './ui/tag.vue'
 import { Ref, ref, computed } from 'vue'
+import { Purchase, User } from '~/utils'
 
 export type PurchaseProps = {
   order: number
@@ -115,7 +115,7 @@ defineExpose({
   background: var(--main);
   align-items: center;
   justify-content: space-between;
-  padding: 8px 20px;
+  padding: 12px 20px;
   color: var(--white);
   font-weight: 600;
   border-bottom: var(--border) var(--black);
@@ -144,4 +144,4 @@ defineExpose({
 .removeButton {
   align-self: flex-start;
 }
-</style>
+</style>stores/purchases

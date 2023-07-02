@@ -16,7 +16,7 @@
     "@typescript-eslint/parser": "^5.53.0",
     "eslint": "^8.34.0",
     "eslint-plugin-vue": "^9.9.0",
-    "nuxt": "^3.2.2"
+    "nuxt": "^3.5.2"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.6",

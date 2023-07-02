@@ -1,5 +1,5 @@
 <script lang='ts' setup>
-import { Purchase, useMainStore, User } from '@/stores/main'
+import {  useMainStore  } from '@/stores'
 import { storeToRefs } from 'pinia'
 import UserPurchaseDetails from '@/components/user-purchase-details.vue'
 import { downloadFile, getFormattedNumber } from '@/helpers'
@@ -7,6 +7,7 @@ import { useRouter } from 'vue-router'
 import { useHead } from 'unhead'
 import Button from '@/components/ui/button.vue'
 import html2canvas from 'html2canvas'
+import { Purchase, User } from 'utils'
 
 const router = useRouter()
 const store = useMainStore()

@@ -1,32 +1,11 @@
-import { nanoid } from 'nanoid'
 import {defineStore} from 'pinia'
 
-export type User = {
-  id: string
-  name: string
-}
-
-export type Purchase = {
-  title: string
-  cost: number | null
-  users: User[]
-}
-
-export const createUser = (name: string): User => ({
-	id: nanoid(),
-	name,
-})
-
-export const createPurchase = (): Purchase => ({
-	cost: null,
-	title: '',
-	users: [],
-})
+import { User, Purchase, createEmptyPurchase, createEmptyUsers, createUser } from '~/utils'
 
 export const useMainStore = defineStore('main', {
 	state: (): {users: User[], purchases: Purchase[]} => ({
-		users: [createUser(''), createUser('')],
-		purchases: [createPurchase()],
+		users: createEmptyUsers(2),
+		purchases: [createEmptyPurchase()],
 	}),
 	actions: {
 		addUser() {
@@ -36,7 +15,7 @@ export const useMainStore = defineStore('main', {
 			this.users.splice(index, 1)
 		},
 		addPurchase() {
-			this.purchases.push(createPurchase())
+			this.purchases.push(createEmptyPurchase())
 		},
 		deletePurchase(index: number) {
 			this.purchases.splice(index, 1)
@@ -59,7 +38,7 @@ export const useMainStore = defineStore('main', {
 		},
 		resetStore() {
 			this.users = [createUser(''), createUser('')]
-			this.purchases = [createPurchase()]
+			this.purchases = [createEmptyPurchase()]
 		},
 	},
 	getters: {

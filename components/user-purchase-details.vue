@@ -1,7 +1,7 @@
 <script lang='ts' setup>
-import { Purchase, User } from '@/stores/main'
 import {computed} from 'vue'
 import { getFormattedNumber } from '@/helpers'
+import { Purchase, User } from '~/utils'
 
 export type UserPurchaseProps = {
   user: User
@@ -19,7 +19,7 @@ function getCostPerPerson(purchase: Purchase) {
 }
 
 function getPurchaseParticipants(purchase: Purchase): User[] {
-	return purchase.users.filter(purchaseUser => purchaseUser.id !== props.user.id)
+	return purchase.users.filter(user => user.id !== props.user.id)
 }
 </script>
 
@@ -100,4 +100,4 @@ function getPurchaseParticipants(purchase: Purchase): User[] {
   border-top: var(--border);
   padding-top: 4px;
 }
-</style>
+</style>stores/purchases

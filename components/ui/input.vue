@@ -5,7 +5,9 @@ import BaseInput from './base-input.vue'
 export type InputProps = {
   value: string
   placeholder?: string
+  autofocus?: boolean
 }
+
 export type InputEmits = {
   (e: 'input', value: string): void
   (e: 'keydown', event: KeyboardEvent): void
@@ -29,6 +31,7 @@ defineExpose({
   <BaseInput
     :value='props.value'
     :placeholder='props.placeholder'
+    :autofocus='props.autofocus'
     @input='value => emit("input", value)'
     @keydown='emit("keydown", $event)'
     ref='inputRef'

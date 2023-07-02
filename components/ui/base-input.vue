@@ -7,7 +7,9 @@ type BaseInputProps = {
   value: string
   placeholder?: string
   inputmode?: InputModes
+  autofocus?: boolean
 }
+
 type BaseInputEmits = {
   (e: 'input', value: string): void
   (e: 'keydown', event: KeyboardEvent): void
@@ -45,6 +47,7 @@ defineExpose({
       :value="props.value"
       :placeholder="props.placeholder"
       :inputmode='props.inputmode'
+      :autofocus='props.autofocus'
       @input="handleInput"
       @keydown='emit("keydown", $event)'
       @keyup='emit("keyup", $event)'

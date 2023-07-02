@@ -1,5 +1,5 @@
 <script lang='ts' setup>
-import { useMainStore } from '@/stores/main'
+import { useMainStore } from '@/stores'
 import Purchase from '@/components/purchase.vue'
 import { storeToRefs } from 'pinia'
 import { getFormattedNumber } from '@/helpers'
@@ -12,7 +12,7 @@ import { nextTick } from 'vue'
 const router = useRouter()
 const store = useMainStore()
 const { users, purchases, isUsersValid } = storeToRefs(store)
-const purchasesRefs: Ref<typeof Purchase[]> = ref([])
+const purchasesRefs: Ref<InstanceType<typeof Purchase>[]> = ref([])
 
 if (!isUsersValid.value) {
 	router.push('/')

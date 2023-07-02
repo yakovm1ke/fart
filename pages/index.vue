@@ -1,7 +1,7 @@
 <script setup lang='ts'>
 import Input from '@/components/ui/input.vue'
 import Button from '@/components/ui/button.vue'
-import { useMainStore } from '@/stores/main'
+import { useMainStore } from '@/stores'
 import { storeToRefs } from 'pinia'
 import { Ref, ref, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
@@ -49,19 +49,20 @@ function handleSubmit() {
 }
 
 useHead({
-	title: 'Start fart',
+	title: 'FART',
 })
 </script>
 
 <template>
   <div :class='$style.container'>
-    <div :class='$style.fields'>
+    <div :class='$style.names'>
       <Input
         v-for='(user, index) in users'
         :key='user.id'
         ref='fieldsRefs'
-        placeholder='Name'
+        :placeholder='`Farter ${(index + 1)}`'
         :value='user.name'
+        :autofocus='index === 0'
         @input='(name) => handleUserChange(index, name)'
         @keydown='(event) => focusNext(event, index)'
       >
@@ -103,7 +104,7 @@ useHead({
   margin: 0 auto;
   box-sizing: border-box;
 }
-.fields {
+.names {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -120,7 +121,7 @@ useHead({
 }
 
 @media screen and (max-width: 500px) {
-  .fields {
+  .names {
     grid-template-columns: 1fr;
   }
 }

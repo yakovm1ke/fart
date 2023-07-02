@@ -1,5 +1,5 @@
 <script lang='ts' setup>
-import { useMainStore } from '@/stores/main'
+import { useMainStore } from '@/stores'
 import { storeToRefs } from 'pinia'
 import { useRouter, useRoute } from 'vue-router'
 import { computed } from 'vue'
