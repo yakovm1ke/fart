@@ -18,7 +18,6 @@ const isAgainButtonShown = computed(() => {
       FART
     </div>
     <div :class='$style.actions'>
-      <ThemeSwitchButton />
       <Button
         v-if='isAgainButtonShown'
         variant='light'
@@ -27,6 +26,7 @@ const isAgainButtonShown = computed(() => {
       >
         Fart again
       </Button>
+      <ThemeSwitchButton />
     </div>
   </header>
 </template>

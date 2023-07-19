@@ -2,6 +2,7 @@
 import Button from './ui/button.vue'
 import {  themeOptions, changeCssVariable, LocalStorageKey } from '~/utils'
 import {ref, computed, onMounted} from 'vue'
+import RefreshIcon from '~/components/icons/refresh-icon.vue'
 
 const activeThemeIndex = ref(0)
 
@@ -48,12 +49,35 @@ onMounted(() => {
   <Button
     size='s'
     @click='handleClick'
-    variant='dark'
 		v-if='themes.length > 1'
+		variant='dark'
   >
-    Switch to: {{ nextTheme.title }}
-  </Button>
+		<div :class='$style.button'>
+			<div :class='$style.label'>
+				Switch to: {{ nextTheme.title }}
+			</div>
+			<RefreshIcon :class='$style.icon' />
+		</div>
+	</Button>
 	<div v-else>
 		No other themes available
 	</div>
 </template>
+
+<style module>
+.button {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.icon {
+	width: 20px
+}
+
+@media screen and (max-width: 600px) {
+	.button .label {
+		display: none;
+	}
+}
+</style>
