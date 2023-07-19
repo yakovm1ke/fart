@@ -2,6 +2,7 @@
 import { useRouter, useRoute } from 'vue-router'
 import {computed} from 'vue'
 import Button from './ui/button.vue'
+import ThemeSwitchButton from './theme-switch-button.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -16,14 +17,17 @@ const isAgainButtonShown = computed(() => {
     <div :class='$style.title'>
       FART
     </div>
-    <Button
-      v-if='isAgainButtonShown'
-      variant='light'
-      size='s'
-      @click='router.push("/")'
-    >
-      Fart again
-    </Button>
+    <div :class='$style.actions'>
+      <ThemeSwitchButton />
+      <Button
+        v-if='isAgainButtonShown'
+        variant='light'
+        size='s'
+        @click='router.push("/")'
+      >
+        Fart again
+      </Button>
+    </div>
   </header>
 </template>
 
@@ -53,5 +57,9 @@ const isAgainButtonShown = computed(() => {
 .title {
   font-weight: 900;
   font-size: 24px;
+}
+.actions {
+  display: flex;
+  gap: 16px
 }
 </style>
