@@ -19,6 +19,8 @@ const getNextThemeIndex = () => {
 }
 
 const applyTheme = (index: number) => {
+	if (!themes.value[index]) return
+
 	const theme = themes.value[index]
 	activeThemeIndex.value = index
 
