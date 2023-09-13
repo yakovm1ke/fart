@@ -1,10 +1,10 @@
 <script setup lang='ts'>
 import { storeToRefs } from 'pinia'
-import { ref } from 'vue'
 
-import { navigateTo, nextTick, Page } from '#imports'
+import { navigateTo, nextTick, ref } from '#imports'
 import Button from '~/components/ui/button.vue'
 import Input from '~/components/ui/input.vue'
+import { Page } from '~/models'
 import { useUserStore } from '~/stores'
 
 const MIN_REQUIRED_USERS = 2

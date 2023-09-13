@@ -3,7 +3,7 @@ import { navigateTo } from 'nuxt/app'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
-import { Page } from '~/utils'
+import { Page } from '~/models'
 
 import Button from './ui/button.vue'
 

@@ -1,4 +1,5 @@
-import { defineNuxtRouteMiddleware, navigateTo, Page } from '#imports'
+import { defineNuxtRouteMiddleware, navigateTo } from '#imports'
+import { Page } from '~/models'
 import { useUserStore } from '~/stores'
 
 export default defineNuxtRouteMiddleware(() => {

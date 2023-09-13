@@ -2,9 +2,9 @@
 import { storeToRefs } from 'pinia'
 
 import NuxtLink from '~/components/ui/nuxt-link.vue'
+import { Page } from '~/models'
 import { usePurchaseStore } from '~/stores'
 import { getFormattedNumber } from '~/utils'
-import { Page } from '~/utils'
 
 const { totalCost } = storeToRefs(usePurchaseStore())
 </script>
