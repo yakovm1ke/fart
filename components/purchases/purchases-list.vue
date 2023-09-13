@@ -64,6 +64,7 @@ onMounted(() => {
   width: 100%;
   min-height: 280px;
   border: 2px dashed var(--gray);
+	box-sizing: border-box;
   background: transparent;
   color: var(--gray);
   border-radius: 12px;
