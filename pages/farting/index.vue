@@ -22,7 +22,12 @@ definePageMeta({
 </script>
 
 <template>
-	<div :class="$style.page">
+	<div
+		:class="[
+			$style.page,
+			!isLargerScreen && $style.pageWithBottom
+		]"
+	>
 		<PurchasesList />
 		<PurchasesAbout
 			v-if="isLargerScreen"
@@ -43,6 +48,10 @@ definePageMeta({
   grid-auto-columns: minmax(auto, 240px);
   align-items: flex-start;
   gap: 20px;
+}
+
+.pageWithBottom {
+	padding-bottom: 80px;
 }
 
 .about {
