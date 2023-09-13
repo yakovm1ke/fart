@@ -1,9 +1,6 @@
 import { nanoid } from 'nanoid'
 
-export interface User {
-  id: string
-  name: string
-}
+import { User } from '~/models'
 
 export function createUser(name = ''): User {
 	return {
@@ -13,7 +10,7 @@ export function createUser(name = ''): User {
 }
 
 export function createEmptyUsers(count: number) {
-	const users = []
+	const users: User[] = []
 	for (let i = 0; i < count; i++) {
 		users.push(createUser())
 	}

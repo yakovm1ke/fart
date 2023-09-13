@@ -15,3 +15,8 @@
   color: var(--black);
 }
 
+html,
+body {
+  scrollbar-gutter: stable;
+}
+

@@ -14,13 +14,13 @@ const props = withDefaults(defineProps<LinkProps>(), {
 </script>
 
 <template>
-  <a
-    :href='href'
-    :target='target'
-    :rel='rel'
-  >
-    <BaseLink>
-      <slot></slot>
-    </BaseLink>
-  </a>
+	<a
+		:href="href"
+		:target="target"
+		:rel="rel"
+	>
+		<BaseLink>
+			<slot />
+		</BaseLink>
+	</a>
 </template>

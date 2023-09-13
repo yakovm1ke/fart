@@ -1,10 +1,12 @@
 <script lang='ts' setup>
-import { useRouter, useRoute } from 'vue-router'
-import {computed} from 'vue'
-import Button from './ui/button.vue'
-import ThemeSwitchButton from './theme-switch-button.vue'
+import { navigateTo } from 'nuxt/app'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 
-const router = useRouter()
+import { Page } from '~/utils'
+
+import Button from './ui/button.vue'
+
 const route = useRoute()
 
 const isAgainButtonShown = computed(() => {
@@ -13,22 +15,21 @@ const isAgainButtonShown = computed(() => {
 </script>
 
 <template>
-  <header :class='$style.header'>
-    <div :class='$style.title'>
-      FART
-    </div>
-    <div :class='$style.actions'>
-      <Button
-        v-if='isAgainButtonShown'
-        variant='light'
-        size='s'
-        @click='router.push("/")'
-      >
-        Fart again
-      </Button>
-      <ThemeSwitchButton />
-    </div>
-  </header>
+	<header :class="$style.header">
+		<div :class="$style.title">
+			FART
+		</div>
+		<div :class="$style.actions">
+			<Button
+				v-if="isAgainButtonShown"
+				variant="light"
+				size="s"
+				@click="navigateTo({name: Page.Index})"
+			>
+				Fart again
+			</Button>
+		</div>
+	</header>
 </template>
 
 <style module>

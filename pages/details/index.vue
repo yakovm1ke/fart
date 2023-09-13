@@ -1,38 +1,46 @@
 <script lang='ts' setup>
-import {  useMainStore  } from '@/stores'
-import { storeToRefs } from 'pinia'
-import UserPurchaseDetails from '@/components/user-purchase-details.vue'
-import { downloadFile, getFormattedNumber } from '@/helpers'
-import { useRouter } from 'vue-router'
-import { useHead } from 'unhead'
-import Button from '@/components/ui/button.vue'
 import html2canvas from 'html2canvas'
-import { Purchase, User } from 'utils'
+import { storeToRefs } from 'pinia'
+import { useHead } from 'unhead'
 
-const router = useRouter()
-const store = useMainStore()
-const {users, purchases, isUsersValid} = storeToRefs(store)
+import { definePageMeta, Page } from '#imports'
+import DetailsUserPurchases from '~/components/details/details-user-purchases.vue'
+import Button from '~/components/ui/button.vue'
+import NuxtLink from '~/components/ui/nuxt-link.vue'
+import { Middleware, Purchase, User } from '~/models'
+import { usePurchaseStore, useUserStore } from '~/stores'
+import { downloadFile, getFormattedNumber } from '~/utils'
 
 useHead({
 	title: 'Details',
 })
 
-if (!isUsersValid.value) {
-	router.push('/farting')
-}
+definePageMeta({
+	middleware: [
+		Middleware.IsUsersFilled,
+	],
+})
+
+const purchaseStore = usePurchaseStore()
+const usersStore = useUserStore()
+
+const { users } = storeToRefs(usersStore)
+const { totalCost, purchases, usersTotalCosts } = storeToRefs(purchaseStore)
 
 function getUserPurchases(user: User): Purchase[] {
-	return purchases.value.filter(purchase => purchase.users.some(purchaseUser => purchaseUser.id === user.id))
+	return purchases
+		.value
+		.filter((it) => it.users.some(({ id }) => id === user.id))
 }
+
 function getUserTotalCost(user: User) {
-	return store.usersTotalCosts[user.id] ?? 0
+	return usersTotalCosts.value.get(user) ?? 0
 }
-function captureScreenshot() {
+
+function captureScreen() {
 	const captureElement = document.body
-
 	if (!captureElement) return
-
-	html2canvas(captureElement).then(canvas => {
+	html2canvas(captureElement).then((canvas) => {
 		const imageUrl = canvas.toDataURL('image/png')
 		downloadFile(imageUrl, `Fart-${new Date().toLocaleDateString()}.png`)
 	})
@@ -40,33 +48,37 @@ function captureScreenshot() {
 </script>
 
 <template>
-  <UiNuxtLink to='/farting'>
-    Back to farting
-  </UiNuxtLink>
+	<div>
+		<NuxtLink
+			:to="{
+				name: Page.Farting,
+			}"
+		>
+			Back to farting
+		</NuxtLink>
 
-  <div id='capture'>
-    <div :class='$style.users'>
-      <UserPurchaseDetails
-        v-for='user in users'
-        :key='user.id'
-        :user='user'
-        :purchases='getUserPurchases(user)'
-        :total-cost='getUserTotalCost(user)'
-      />
-    </div>
-    <div :class='$style.total'>
-      <span :class='$style.totalTitle'>Total: </span>
-      <span>{{ getFormattedNumber(store.totalCost) }}</span>
-    </div>
-  </div>
+		<div :class="$style.users">
+			<DetailsUserPurchases
+				v-for="user in users"
+				:key="user.id"
+				:user="user"
+				:purchases="getUserPurchases(user)"
+				:total-cost="getUserTotalCost(user)"
+			/>
+		</div>
+		<div :class="$style.total">
+			<span :class="$style.totalTitle">Total: </span>
+			<span>{{ getFormattedNumber(totalCost) }}</span>
+		</div>
+	</div>
 
-  <Button
-    v-if='store.totalCost'
-    :class='$style.screenshotButton'
-    @click='captureScreenshot'
-  >
-    Capture screen
-  </Button>
+	<Button
+		v-if="totalCost"
+		:class="$style.screenshotButton"
+		@click="captureScreen"
+	>
+		Capture screen
+	</Button>
 </template>
 
 <style module>

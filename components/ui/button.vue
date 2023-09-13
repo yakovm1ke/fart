@@ -1,5 +1,5 @@
 <script setup lang='ts'>import { Ref } from 'vue'
-import { useCssModule, ref, computed } from 'vue'
+import { computed, ref, useCssModule } from 'vue'
 
 export type ButtonVariants = 'primary' | 'light' | 'dark'
 export type ButtonSizes = 's' | 'm' | 'unwrapped'
@@ -8,12 +8,14 @@ export type ButtonProps = {
   variant?: ButtonVariants
   size?: ButtonSizes
   disabled?: boolean
+	type?: HTMLButtonElement['type']
 }
 const props = withDefaults(defineProps<ButtonProps>(), {
 	disabled: false,
 	variant: 'primary',
 	fill: false,
 	size: 'm',
+	type: 'button',
 })
 
 const emit = defineEmits(['click'])
@@ -22,25 +24,25 @@ const style = useCssModule()
 const buttonRef: Ref<HTMLButtonElement | null> = ref(null)
 
 const sizeClass = computed(() => {
-	switch(props.size) {
-	case('unwrapped'):
+	switch (props.size) {
+	case ('unwrapped'):
 		return style['unwrapped']
-	case('s'):
+	case ('s'):
 		return style['small']
-	case('m'):
+	case ('m'):
 	default:
 		return style['medium']
 	}
 })
 
 const variantClass = computed(() => {
-	switch(props.variant) {
-	case('light'):
+	switch (props.variant) {
+	case ('light'):
 		return style['light']
-	case('dark'):
+	case ('dark'):
 		return style['dark']
 	default:
-	case('primary'):
+	case ('primary'):
 		return style['primary']
 	}
 })
@@ -55,19 +57,20 @@ defineExpose({
 </script>
 
 <template>
-  <button
-    ref='buttonRef'
-    @click="emit('click')"
-    :class='[
-      fill && $style.fill,
-      $style.button,
-      variantClass,
-      sizeClass,
-    ]'
-    :disabled='disabled'
-  >
-    <slot></slot>
-  </button>
+	<button
+		ref="buttonRef"
+		:type="props.type"
+		:class="[
+			fill && $style.fill,
+			$style.button,
+			variantClass,
+			sizeClass,
+		]"
+		:disabled="disabled"
+		@click="emit('click')"
+	>
+		<slot />
+	</button>
 </template>
 
 <style module>

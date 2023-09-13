@@ -1,6 +1,7 @@
 <script lang='ts' setup>
 import IMask, { InputMask } from 'imask'
-import { Ref, ref, onMounted } from 'vue'
+import { onMounted, Ref, ref } from 'vue'
+
 import BaseInput from './base-input.vue'
 
 export type InputNumberProps = {
@@ -21,15 +22,15 @@ const props = withDefaults(defineProps<InputNumberProps>(), {
 const emit = defineEmits<InputNumberEmits>()
 
 const numberMaskOptions = {
-	mask: Number,  // enable number mask
+	mask: Number, // enable number mask
 
-	scale: 2,  // digits after point, 0 for integers
-	signed: false,  // disallow negative
-	thousandsSeparator: ' ',  // any single char
-	padFractionalZeros: false,  // if true, then pads zeros at end to the length of scale
-	normalizeZeros: true,  // appends or removes zeros at ends
-	radix: ',',  // fractional delimiter
-	mapToRadix: ['.'],  // symbols to process as radix
+	scale: 2, // digits after point, 0 for integers
+	signed: false, // disallow negative
+	thousandsSeparator: ' ', // any single char
+	padFractionalZeros: false, // if true, then pads zeros at end to the length of scale
+	normalizeZeros: true, // appends or removes zeros at ends
+	radix: ',', // fractional delimiter
+	mapToRadix: ['.'], // symbols to process as radix
 
 	// additional number interval options (e.g.)
 	min: props.min,
@@ -64,18 +65,18 @@ defineExpose({
 </script>
 
 <template>
-  <BaseInput
-    ref='inputRef'
-    :value="numberMask?.value ?? ''"
-    :placeholder='props.placeholder'
-    @keyup='handleInput'
-		inputmode='decimal'
-  >
-    <template #after>
-      <slot name='after'></slot>
-    </template>
-    <template #before>
-      <slot name='before'></slot>
-    </template>
-  </BaseInput>
+	<BaseInput
+		ref="inputRef"
+		:value="numberMask?.value ?? ''"
+		:placeholder="props.placeholder"
+		inputmode="decimal"
+		@keyup="handleInput"
+	>
+		<template #after>
+			<slot name="after" />
+		</template>
+		<template #before>
+			<slot name="before" />
+		</template>
+	</BaseInput>
 </template>
