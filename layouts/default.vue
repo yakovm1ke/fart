@@ -8,22 +8,22 @@ useHead({
 </script>
 
 <template>
-  <div :class='$style.page'>
-    <Header />
+	<div :class="$style.wrapper">
+		<Header />
 
-    <div :class='$style.container'>
-      <main :class='$style.main'>
-        <slot></slot>
-      </main>
-    </div>
-  </div>
+		<div :class="$style.container">
+			<main :class="$style.main">
+				<slot />
+			</main>
+		</div>
+	</div>
 </template>
 
 <style module>
 body {
   margin: 0;
 }
-.page {
+.wrapper {
   min-height: 100vh;
 }
 .container {
@@ -32,10 +32,5 @@ body {
   width: 100%;
   margin: 0 auto;
   padding: 32px 32px 60px;
-}
-.image {
-  display: flex;
-  position: relative;
-  bottom: 3px;
 }
 </style>

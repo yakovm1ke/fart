@@ -1,5 +1,6 @@
 <script setup lang='ts'>
 import { Ref, ref } from 'vue'
+
 import BaseInput from './base-input.vue'
 
 export type InputProps = {
@@ -28,19 +29,19 @@ defineExpose({
 </script>
 
 <template>
-  <BaseInput
-    :value='props.value'
-    :placeholder='props.placeholder'
-    :autofocus='props.autofocus'
-    @input='value => emit("input", value)'
-    @keydown='emit("keydown", $event)'
-    ref='inputRef'
-  >
-    <template #after>
-      <slot name='after'></slot>
-    </template>
-    <template #before>
-      <slot name='before'></slot>
-    </template>
-  </BaseInput>
+	<BaseInput
+		ref="inputRef"
+		:value="props.value"
+		:placeholder="props.placeholder"
+		:autofocus="props.autofocus"
+		@input="value => emit(&quot;input&quot;, value)"
+		@keydown="emit(&quot;keydown&quot;, $event)"
+	>
+		<template #after>
+			<slot name="after" />
+		</template>
+		<template #before>
+			<slot name="before" />
+		</template>
+	</BaseInput>
 </template>

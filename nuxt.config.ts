@@ -3,4 +3,8 @@ export default defineNuxtConfig({
 	modules: [
 		'@pinia/nuxt',
 	],
+
+	imports: {
+		autoImport: false,
+	},
 })

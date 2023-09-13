@@ -1,13 +1,10 @@
-import { User } from '~/utils'
+import { nanoid } from 'nanoid'
 
-export interface Purchase {
-  title: string
-  cost: number | null
-  users: User[]
-}
+import { Purchase } from '~/models'
 
 export function createEmptyPurchase(): Purchase {
 	return {
+		id: nanoid(),
 		cost: null,
 		title: '',
 		users: [],

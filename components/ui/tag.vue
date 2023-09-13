@@ -8,13 +8,13 @@ const emit = defineEmits(['click'])
 </script>
 
 <template>
-  <button
-    tabindex='0'
-    :class='[$style.tag, props.selected && $style.selected]'
-    @click='emit("click")'
-  >
-    {{ props.label }}
-  </button>
+	<button
+		tabindex="0"
+		:class="[$style.tag, props.selected && $style.selected]"
+		@click="emit(&quot;click&quot;)"
+	>
+		{{ props.label }}
+	</button>
 </template>
 
 <style module>

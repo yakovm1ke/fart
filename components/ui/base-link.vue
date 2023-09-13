@@ -1,5 +1,5 @@
 <script lang='ts' setup>
-import {computed, useCssModule} from 'vue'
+import { computed, useCssModule } from 'vue'
 
 export type LinkThemes = 'light' | 'dark'
 
@@ -18,10 +18,10 @@ const props = withDefaults(defineProps<BaseLinkProps>(), {
 })
 
 const themeClass = computed(() => {
-	switch(props.theme) {
-	case('light'):
+	switch (props.theme) {
+	case ('light'):
 		return style['light']
-	case('dark'):
+	case ('dark'):
 	default:
 		return ''
 	}
@@ -29,12 +29,12 @@ const themeClass = computed(() => {
 </script>
 
 <template>
-  <div
-    @click="(e) => emit('click', e)"
-    :class='[$style.baseLink, themeClass]'
-  >
-    <slot></slot>
-  </div>
+	<div
+		:class="[$style.baseLink, themeClass]"
+		@click="(e) => emit('click', e)"
+	>
+		<slot />
+	</div>
 </template>
 
 <style module>

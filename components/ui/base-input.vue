@@ -36,24 +36,24 @@ defineExpose({
 </script>
 
 <template>
-  <div
-    :class='$style.inputWrapper'
-    @click='focus'
-  >
-    <slot name='before'></slot>
-    <input
-      ref='inputRef'
-      :class='$style.input'
-      :value="props.value"
-      :placeholder="props.placeholder"
-      :inputmode='props.inputmode'
-      :autofocus='props.autofocus'
-      @input="handleInput"
-      @keydown='emit("keydown", $event)'
-      @keyup='emit("keyup", $event)'
-    />
-    <slot name='after'></slot>
-  </div>
+	<div
+		:class="$style.inputWrapper"
+		@click="focus"
+	>
+		<slot name="before" />
+		<input
+			ref="inputRef"
+			:class="$style.input"
+			:value="props.value"
+			:placeholder="props.placeholder"
+			:inputmode="props.inputmode"
+			:autofocus="props.autofocus"
+			@input="handleInput"
+			@keydown="emit(&quot;keydown&quot;, $event)"
+			@keyup="emit(&quot;keyup&quot;, $event)"
+		>
+		<slot name="after" />
+	</div>
 </template>
 
 <style module>
