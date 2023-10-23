@@ -6,7 +6,6 @@ import { definePageMeta } from '#imports'
 import PurchasesAbout from '~/components/purchases/purchases-about.vue'
 import PurchasesBottomAbout from '~/components/purchases/purchases-bottom-about.vue'
 import PurchasesList from '~/components/purchases/purchases-list.vue'
-import { Middleware } from '~/models'
 
 const isLargerScreen = useMediaQuery('(min-width: 860px)')
 
@@ -16,7 +15,7 @@ useHead({
 
 definePageMeta({
 	middleware: [
-		Middleware.IsUsersFilled,
+		'is-users-filled',
 	],
 })
 </script>

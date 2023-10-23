@@ -8,7 +8,7 @@ import DetailsUserPurchases from '~/components/details/details-user-purchases.vu
 import Button from '~/components/ui/button.vue'
 import NuxtLink from '~/components/ui/nuxt-link.vue'
 import { Page } from '~/models'
-import { Middleware, Purchase, User } from '~/models'
+import { Purchase, User } from '~/models'
 import { usePurchaseStore, useUserStore } from '~/stores'
 import { downloadFile, getFormattedNumber } from '~/utils'
 
@@ -18,7 +18,7 @@ useHead({
 
 definePageMeta({
 	middleware: [
-		Middleware.IsUsersFilled,
+		'is-users-filled',
 	],
 })
 

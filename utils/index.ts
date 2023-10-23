@@ -1,6 +1,5 @@
 export * from './download-file'
 export * from './get-formatted-number'
-export * from './is-enum-value'
 export * from './local-storage'
 export * from './purchase'
 export * from './user'
