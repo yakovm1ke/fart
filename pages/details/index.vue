@@ -1,4 +1,5 @@
 <script lang='ts' setup>
+import copy from 'copy-to-clipboard'
 import html2canvas from 'html2canvas'
 import { storeToRefs } from 'pinia'
 import { useHead } from 'unhead'
@@ -80,7 +81,7 @@ function getDetails(withDetails: boolean) {
 }
 
 function copyResult(withDetails: boolean) {
-	navigator.clipboard.writeText(getDetails(withDetails))
+	copy(getDetails(withDetails))
 }
 </script>
 
@@ -156,6 +157,7 @@ function copyResult(withDetails: boolean) {
 .actions {
 	margin-top: 32px;
 	display: flex;
+	flex-wrap: wrap;
 	gap: 8px;
 }
 </style>
