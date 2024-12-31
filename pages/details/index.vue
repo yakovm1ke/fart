@@ -114,7 +114,7 @@ function copyResult(withDetails: boolean) {
 		<Button
 			v-if="totalCost"
 			:class="$style.screenshotButton"
-			@click="copyResult(false)"
+			@click="() => copyResult(false)"
 		>
 			Copy simple
 		</Button>
@@ -123,7 +123,7 @@ function copyResult(withDetails: boolean) {
 			v-if="totalCost"
 			:class="$style.screenshotButton"
 			variant="dark"
-			@click="copyResult(true)"
+			@click="() => copyResult(true)"
 		>
 			Copy with details
 		</Button>
