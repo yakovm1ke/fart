@@ -46,6 +46,42 @@ function captureScreen() {
 		downloadFile(imageUrl, `Fart-${new Date().toLocaleDateString()}.png`)
 	})
 }
+
+function getDetails(withDetails: boolean) {
+	const userPurchaseMap = new Map<User, Purchase[]>([])
+
+	purchases.value.forEach((purchase) => {
+		const users = purchase.users
+		users.forEach((user) => {
+			userPurchaseMap.set(user, [...userPurchaseMap.get(user) || [], purchase])
+		})
+	})
+
+	const list = Array.from(purchaseStore.usersTotalCosts.entries().map(([user, totalCost]) => {
+		const userList = [`${user.name} (${getFormattedNumber(totalCost)})`]
+
+		if (withDetails) {
+			const details = userPurchaseMap.get(user)?.map((purchase) => {
+				return `— ${purchase.title} — ${getFormattedNumber((purchase.cost || 0) / purchase.users.length)}`
+			})
+
+			userList.push(...details || [])
+		}
+
+		return userList
+	}))
+
+	return [
+		`Fart: ${new Date().toLocaleDateString()} — ${new Date().toLocaleTimeString()}\n\n`,
+		...[...list.map((it) => {
+			return it.join('\n')
+		})].map((it, index, { length }) => (index === length - 1) ? it : `${it}\n\n`),
+	].join('')
+}
+
+function copyResult(withDetails: boolean) {
+	navigator.clipboard.writeText(getDetails(withDetails))
+}
 </script>
 
 <template>
@@ -73,13 +109,33 @@ function captureScreen() {
 		</div>
 	</div>
 
-	<Button
-		v-if="totalCost"
-		:class="$style.screenshotButton"
-		@click="captureScreen"
-	>
-		Capture screen
-	</Button>
+	<div :class="$style.actions">
+		<Button
+			v-if="totalCost"
+			:class="$style.screenshotButton"
+			@click="copyResult(false)"
+		>
+			Copy simple
+		</Button>
+
+		<Button
+			v-if="totalCost"
+			:class="$style.screenshotButton"
+			variant="dark"
+			@click="copyResult(true)"
+		>
+			Copy with details
+		</Button>
+
+		<Button
+			v-if="totalCost"
+			:class="$style.screenshotButton"
+			variant="light"
+			@click="captureScreen"
+		>
+			Save screenshot
+		</Button>
+	</div>
 </template>
 
 <style module>
@@ -96,7 +152,10 @@ function captureScreen() {
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 20px;
 }
-.screenshotButton {
-  margin-top: 32px;
+
+.actions {
+	margin-top: 32px;
+	display: flex;
+	gap: 8px;
 }
 </style>
