@@ -1,6 +1,7 @@
 <script lang='ts' setup>
 import { storeToRefs } from 'pinia'
 import { useHead } from 'unhead'
+import { toast } from 'vue3-toastify'
 
 import { definePageMeta, getCopyString } from '#imports'
 import DetailsUserPurchases from '~/components/details/details-user-purchases.vue'
@@ -38,7 +39,18 @@ function getUserTotalCost(user: User) {
 }
 
 function copyResult(ignoreDetails: boolean) {
-	navigator.clipboard.writeText(getCopyString(purchaseStore.purchases, ignoreDetails))
+	try {
+		navigator.clipboard.writeText(getCopyString(purchaseStore.purchases, ignoreDetails))
+		toast.success('Successfully copied')
+	} catch (e) {
+		let message = 'Something went wrong'
+
+		if (e instanceof Error) {
+			message = e.message || message
+		}
+
+		toast.error(`Failed to copy\n${message}`)
+	}
 }
 </script>
 
