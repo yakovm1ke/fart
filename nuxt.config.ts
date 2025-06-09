@@ -7,4 +7,9 @@ export default defineNuxtConfig({
 	imports: {
 		autoImport: false,
 	},
+
+	app: {
+		baseURL: process.env.NODE_ENV === 'production' ? '/fart/' : '/',
+		buildAssetsDir: '/_nuxt/',
+	},
 })
